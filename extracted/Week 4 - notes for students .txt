@@ -1,0 +1,329 @@
+
+
+--- PAGE 1 ---
+Probability Intuition 
+& Simulation
+Randomness, Events, and Computational 
+Probability
+Dr Hamza Altarturi
+
+
+--- PAGE 2 ---
+Today’s 
+Agenda
+Part 1: Sample Spaces, Events, & 
+Probability Rules
+Part 2: Conditional Probability & 
+Bayes Intuition
+Part 3: Random Variables, PMF , & 
+Expectation
+Part 4: Simulation to Estimate 
+Probabilities
+Dr Hamza Altarturi
+
+
+--- PAGE 3 ---
+What is 
+Probability?
+• Random Process: A process (like rolling a 
+die or flipping a coin) that gives rise to an 
+outcome we cannot perfectly predict.
+• Probability: The proportion of times an 
+outcome would occur if we observed the 
+random process an infinite number of 
+times.
+• Law of Large Numbers: As more 
+observations are collected, the proportion 
+of occurrences with a particular outcome 
+converges to the true probability.
+Dr Hamza Altarturi
+
+
+--- PAGE 4 ---
+Simulating 
+Randomness in Python
+• We use the numpy.random sub-
+module to make random choices.
+• np.random.choice(array_name): 
+Picks one item at random with equal 
+likelihood.
+• Code Example:
+• Adding a second argument repeats 
+the choice: 
+np.random.choice(two_groups, 10)
+Dr Hamza Altarturi
+
+
+--- PAGE 5 ---
+Sample Spaces and Disjoint Outcomes
+Sample Space (): The set of all possible outcomes for a random 
+process (e.g., for a die).Sample
+Event: A subset or collection of outcomes from the sample space (e.g., 
+rolling an even number).Event
+Disjoint (Mutually Exclusive) Outcomes: Two outcomes that cannot 
+both happen at the same time (e.g., rolling a 1 and a 2 on a single die).Disjoint
+Dr Hamza Altarturi
+
+
+--- PAGE 6 ---
+The Addition Rule
+If all outcomes are equally likely, P(Event) = (# outcomes that make event happen)/(# all 
+outcomes).
+Addition Rule for Disjoint Outcomes: If events and are disjoint, the probability that either 
+occurs is their sum.
+P(A or B)=P(A)+P(B)
+Complement: The probability of an event not happening
+The complement rule is powerful: P(not A) = 1 − P(A).
+Often easier to compute the complement first.
+Dr Hamza Altarturi
+
+
+--- PAGE 7 ---
+Independent Processes & The Multiplication Rule
+Independent Processes: Knowing the outcome of 
+one provides no useful information about the 
+outcome of the other (e.g., rolling two separate dice).
+Multiplication Rule for Independent Processes: If 
+and are independent, the probability that both occur 
+is their product.
+For independent events, P(A and B)=P(A)×P(B)
+Dr Hamza Altarturi
+
+
+--- PAGE 8 ---
+Conditional Probability
+• What happens when variables are not independent? We use 
+conditional probability.
+• Definition: Computing the probability of an outcome under a 
+specific condition we know to be true.
+• Notation: P(A∣B) translates to "The probability of A given B".
+• Formula: 
+Dr Hamza Altarturi
+
+
+--- PAGE 9 ---
+Dr Hamza Altarturi
+
+
+--- PAGE 10 ---
+Dr Hamza Altarturi
+
+
+--- PAGE 11 ---
+Dr Hamza Altarturi
+
+
+--- PAGE 12 ---
+Dr Hamza Altarturi
+
+
+--- PAGE 13 ---
+Why Human 
+Intuition Fails
+Humans are notoriously bad at 
+intuitively understanding 
+probability and conditional events
+Dr Hamza Altarturi
+
+
+--- PAGE 14 ---
+Fixing Intuition: The 100 Doors Concept
+• Why should you switch? The host's action revealed new 
+information.
+• The 100 Door Thought Experiment:
+• Suppose there are 100 doors. You pick Door 1 (1/100 chance of 
+winning).
+• The host opens 98 other doors to reveal 98 goats.
+• Should you switch? Yes! The host essentially told you exactly 
+where the car
+Dr Hamza Altarturi
+
+
+--- PAGE 15 ---
+Bayes' 
+Theorem and 
+Bayesian 
+Intuition
+• The Monty Hall problem is an exercise in 
+updating probabilities based on new 
+information.
+• The Bayesian Approach:
+o Prior belief: We believe is some value 
+before seeing data.
+o Observe data: A conditional event occurs.
+o Posterior belief: We update our belief based 
+on the data using Bayes' rule.
+• Instead of thinking of parameters as fixed 
+unknowns, we model our belief about 
+them using probability distributions.
+Dr Hamza Altarturi
+
+
+--- PAGE 16 ---
+Random Variables
+• Random Variable: A random process or variable with a 
+numerical outcome.
+• Usually represented by a capital letter like , or .
+• Example: If a bookstore sells a textbook for 137 and a study 
+guide for 33.
+• Outcome (buys neither, prob 0.20)
+• Outcome (buys text, prob 0.55)
+• Outcome (buys both, prob 0.25)
+Dr Hamza Altarturi
+
+
+--- PAGE 17 ---
+Expectation (Expected Value)
+• Expected Value E(X): The average outcome of a random variable, 
+computed by weighting each outcome by its probability
+• Formula:
+• Example Computation:
+• E(X)=(0×0.20)+(137×0.55)+(170×0.25)=$117.85
+• Physical Intuition: The expected value acts as the center of 
+gravity or balancing point of the distribution
+Dr Hamza Altarturi
+
+
+--- PAGE 18 ---
+Probability 
+Mass 
+Functions 
+(PMFs)
+PMF: A function that represents a 
+discrete distribution by mapping each 
+possible quantity to its probability
+Normalized: The sum of all 
+probabilities in a PMF always exactly 
+equals 1.0
+By dividing frequencies (counts) by 
+the total sample size n, we turn raw 
+counts into probabilities
+Dr Hamza Altarturi
+
+
+--- PAGE 19 ---
+PMFs in 
+Python 
+(empiricaldist)
+We use the Pmf object from the 
+empiricaldist library.
+Code Example: pmf.sum() will 
+return 1.0.
+Can plot easily with pmf.bar().
+Dr Hamza Altarturi
+
+
+--- PAGE 20 ---
+Summarizing a 
+PMF in Python
+You do not need to write for loops to 
+calculate Expected Value and Variance.
+Expected Value (Mean): pmf.mean()
+Variance: pmf.var()
+Standard Deviation: pmf.std()
+Dr Hamza Altarturi
+
+
+--- PAGE 21 ---
+The Class Size 
+Paradox
+Dr Hamza Altarturi
+
+
+--- PAGE 22 ---
+The Class 
+Size 
+Paradox
+• The Paradox
+• The university reports an average class 
+size of 24. However, surveying students 
+reveals an average class size of 29
+• Why?
+• Large classes have more students to 
+observe them. A class of 50 has 50 
+students reporting it; a class of 5 has 
+only 5 students reporting it
+• This is the Inspection Paradox
+• The act of observing the data biases the 
+sample
+Dr Hamza Altarturi
+
+
+--- PAGE 23 ---
+The Power of Simulation
+What happens when a probability problem is too mathematically complex?
+Simulation: Using a computer to mimic a random process thousands of 
+times to estimate the probability
+“Probability, Why Intuition Fails Us & How Design And Simulation Can Help” 
+suggests that dynamic, explorable simulations counteract cognitive biases 
+better than raw math
+Dr Hamza Altarturi
+
+
+--- PAGE 24 ---
+The Four 
+Steps of 
+Simulation
+Dr Hamza Altarturi
+
+
+--- PAGE 25 ---
+Step 2: Simulating One 
+Value (Coin Tosses)
+• We want to simulate the 
+number of heads in 100 
+tosses.
+• Code Example:
+• np.random.choice(..., 100) 
+simulates 100 tosses instantly
+• np.count_nonzero acts as a 
+fast way to count True Boolean 
+statements
+Dr Hamza Altarturi
+
+
+--- PAGE 26 ---
+Step 4: 
+Simulating 
+Multiple Values 
+(Iteration)
+Dr Hamza Altarturi
+
+
+--- PAGE 27 ---
+Simulating 
+Monty Hall 
+(Step 4 & 
+Results)
+Dr Hamza Altarturi
+
+
+--- PAGE 28 ---
+Cumulative 
+Distribution 
+Functions 
+(CDFs)
+Dr Hamza Altarturi
+
+
+--- PAGE 29 ---
+CDFs in Python
+• We use Cdf.from_seq() from the empiricaldist library.
+• Code Example:
+• Evaluating a Cdf object at a given value returns the probability (0 to 1.0).
+Dr Hamza Altarturi
+
+
+--- PAGE 30 ---
+CDFs in Python
+• We can work backwards! If we have a percentile 
+rank, we can find the corresponding value (the 
+quantile).
+• cdf.inverse(proportion): Returns the value at that 
+exact percentile.
+Dr Hamza Altarturi
+
+
+--- PAGE 31 ---
+Summary & Next Steps
+Dr Hamza Altarturi

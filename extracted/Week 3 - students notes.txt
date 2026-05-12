@@ -1,0 +1,563 @@
+
+
+--- PAGE 1 ---
+Exploratory Data 
+Analysis (EDA)
+Tables, Variables, and Discovering Patterns in Data
+Dr Hamza Altarturi
+
+
+--- PAGE 2 ---
+Today’s 
+Agenda
+Part 1: Tidy tabular thinking & variable 
+types
+Part 2: One-variable summaries: 
+counts, proportions, center, spread
+Part 3: Visual EDA: bar charts, 
+histograms, box plots
+Part 4: Comparing variables and 
+communicating findings
+Dr Hamza Altarturi
+
+
+--- PAGE 3 ---
+Key Python Code References to Emphasize
+• Tabular Operations (pandas):
+• pd.read_fwf() / pd.read_csv() to load data
+• .df.shape, df.head(), df.columns for initial 
+inspection
+• df.query("condition") for filtering rows (e.g., 
+df.query("outcome == 1"))
+• df.sort_values() for ordering data
+Dr Hamza Altarturi
+
+
+--- PAGE 4 ---
+Key Python Code References to Emphasize
+• Categorical Summaries & Visuals:
+• df["col"].value_counts(dropna=False) for frequency 
+counts and detecting NaN
+• empiricaldist.FreqTab.from_seq() to represent PMFs 
+(Probability Mass Functions) for discrete data
+• pd.crosstab() or df.pivot() for two-way contingency 
+tables
+• .barh() or .bar() for categorical bar charts
+Dr Hamza Altarturi
+
+
+--- PAGE 5 ---
+Key Python Code References to Emphasize
+• Numerical Summaries & Visuals:
+• df["col"].mean(), .median(), .var(), .std() for central tendency 
+and spread
+• np.percentile() or df["col"].quantile() for CDFs and IQR 
+calculations
+• plt.hist(data, bins=..., density=True) for histograms. Crucial: 
+Emphasize the density=True argument to satisfy the area 
+principle
+• plt.boxplot() for five-number summaries
+• plt.scatter() for visualizing relationships between two 
+numerical variables
+Dr Hamza Altarturi
+
+
+--- PAGE 6 ---
+The Goal of EDA
+• What is EDA? An approach to data 
+analysis that uses visualizations and 
+summary statistics to discover patterns 
+and identify anomalies.
+• Why do it?
+• Human intuition and anecdotal 
+evidence are often flawed (small 
+sample sizes, confirmation bias)
+• We need systematic, computational 
+tools to summarize diverse datasets 
+concisely
+Dr Hamza Altarturi
+
+
+--- PAGE 7 ---
+The Goal of EDA
+• The Workflow
+• Read Data → Validate/Clean → 
+Summarize numerically → 
+Visualize visually.
+• EDA checklist
+• inspect → classify → clean → 
+summarize → visualize → 
+interpret
+Dr Hamza Altarturi
+
+
+--- PAGE 8 ---
+Tables and 
+Variables
+Tidy Tabular Thinking & 
+Variable Types
+Dr Hamza Altarturi
+
+
+--- PAGE 9 ---
+Tidy Tabular 
+Thinking
+• The Data Table: The fundamental object for representing datasets.
+• Rows = Cases (Individuals): Each row contains all information 
+about a single entry (e.g., one person, one ice cream cone, one 
+movie).
+• Columns = Variables (Attributes):  Each column describes a single 
+aspect across all entries.
+• Python implementation: We use the Table class from the 
+datascience library or DataFrame from Pandas
+Dr Hamza Altarturi
+
+
+--- PAGE 10 ---
+Essential Table 
+Operations 
+(Python)
+• pd.read_fwf() or pd.read_csv()
+• Loads data files into a DataFrame
+• df.shape
+• Returns the number of rows and 
+columns
+• df.head()
+• Displays the first 5 rows for visual 
+validation
+• df.columns
+• Returns the names of all variables
+• df["Column_Name"]
+• Extracts a single column as a 
+Pandas Series
+Dr Hamza Altarturi
+
+
+--- PAGE 11 ---
+Selecting, Filtering, and Sorting Rows
+• We rarely look at the whole table at once. We subset the data 
+based on conditions.
+• Filtering by Condition (query):
+• df.query("outcome == 1") OR df[df["outcome"] == 1] selects 
+only rows representing live births
+• Can use operators like <, >, ==.
+• Sorting (sort_values):
+• df.sort_values(ascending=False) orders rows by a specific 
+variable (e.g., finding the highest-paid athletes)
+Dr Hamza Altarturi
+
+
+--- PAGE 12 ---
+Classifying 
+Variable Types
+• EDA Rules: Match the chart and the statistic 
+to the variable type.
+• Categorical Variables: Groupings or labels.
+• Nominal: No logical order (e.g., Ice 
+cream flavor, State)
+• Ordinal: Logical rank (e.g., Income level 
+1 to 14)
+• Numerical (Quantitative) Variables: 
+Measured numbers with meaningful 
+magnitudes
+• Discrete: Specific jumps/counts (e.g., 
+Number of movies, parity)
+• Continuous: Any value in a range (e.g., 
+Weight, Height, Salary)
+Dr Hamza Altarturi
+
+
+--- PAGE 13 ---
+Summarizing 
+Data
+Summary Statistics 
+(Counts, Proportions, 
+Center, Spread)
+Dr Hamza Altarturi
+
+
+--- PAGE 14 ---
+Summarizing 
+Categorical Data 
+(Counts & Proportions)
+• Frequency Table: The standard way 
+to summarize a categorical 
+distribution. It maps values to their 
+specific counts
+• In Python (pandas):
+• df["col"].value_counts(dropna=
+False) counts how often each 
+category appears
+• Proportions / Relative Frequencies: 
+Dividing the count by the total 
+sample size to get a percentage or 
+proportion between 0 and 1
+Dr Hamza Altarturi
+
+
+--- PAGE 15 ---
+Missing values and 
+data-quality checks
+Python examples:
+• df.isna().sum()
+• df["col"].value_counts(dropna=False)
+• df.duplicated().sum()
+Dr Hamza Altarturi
+
+
+--- PAGE 16 ---
+Visualizing Categorical Data
+Bar Charts: The best visual summary for categorical distributions.
+Displays one bar per category. Length is proportional to frequency
+Python: plt.barh() or FreqTab.bar()
+Design Rule: Because nominal categories have no universal rank order, 
+sort the bars by frequency to make the chart easier to read
+Dr Hamza Altarturi
+
+
+--- PAGE 17 ---
+Dr Hamza Altarturi
+
+
+--- PAGE 18 ---
+Summaries of 
+One Variable 
+Central Tendency
+Where is the "center" of our numerical 
+data?
+Mean (.mean()): The arithmetic average. 
+Sum of all values divided by n
+Median (.median()): The exact middle value 
+when the data is sorted (the 50th 
+percentile)
+Mode (.mode()): The most frequently 
+occurring value
+Dr Hamza Altarturi
+
+
+--- PAGE 19 ---
+Which measure of central tendency should be 
+used for data analysis?
+Dr Hamza Altarturi
+
+
+--- PAGE 20 ---
+The Effect of Shape, Skewness, & Outliers
+Symmetrical: Mean 
+and Median are roughly 
+equal (bell curve / 
+normal distribution)
+Outliers: Extreme 
+quantities that fall far 
+outside the general 
+scope of the data
+Skewness: When data 
+is asymmetrical, with a 
+long tail extending in 
+one direction
+The Rule: For highly 
+skewed data, the 
+median is safer
+Dr Hamza Altarturi
+
+
+--- PAGE 21 ---
+Summaries of 
+One Variable 
+Spread
+How much does the data vary around the 
+center?
+Variance (.var()): The mean of the squared 
+deviations from the center
+Standard Deviation (.std()): The square root 
+of variance. Measures the "typical" distance 
+from the mean in original units
+Informally: Values within 1 or 2 standard 
+deviations from the mean are common; 
+farther values are rare
+Dr Hamza Altarturi
+
+
+--- PAGE 22 ---
+Spread: 
+Percentiles 
+and IQR
+Percentiles (Quantiles): The value below 
+which a certain percentage of data falls.
+• Example: 25th percentile (Q1) and 75th 
+percentile (Q3).
+Interquartile Range (IQR): Q3 - Q1.
+Meaning: The IQR measures the spread 
+of the middle 50% of the data
+Like the median, the IQR is highly 
+resistant to extreme outliers.
+Dr Hamza Altarturi
+
+
+--- PAGE 23 ---
+How to describe a distribution
+When describing a numerical variable, comment on:
+Dr Hamza Altarturi
+
+
+--- PAGE 24 ---
+Visualizing Data
+Visual EDA 
+(Distributions, 
+Histograms, Box Plots)
+Dr Hamza Altarturi
+
+
+--- PAGE 25 ---
+Visualizing 
+Numerical 
+Data 
+Histograms
+• Histogram: The primary tool for 
+visualizing the distribution of 
+continuous numerical variables
+• Binning: Grouping continuous 
+values into contiguous intervals 
+(bins)
+• Endpoint convention: Bins 
+usually include the left 
+endpoint but not the right [a, 
+b)
+• Python: plt.hist(data, bins=...)
+Dr Hamza Altarturi
+
+
+--- PAGE 26 ---
+Histogram vs. Barchart
+Dr Hamza Altarturi
+
+
+--- PAGE 27 ---
+The Danger of Histogram Counts
+• It is common to use raw counts on 
+the y-axis of a histogram.
+• The Problem: If bins are unequal in 
+width, plotting raw counts 
+drastically misrepresents the data
+• A wide bin will artificially inflate the 
+count, making it appear as a huge 
+peak in the data and entirely 
+obscuring the true shape of the 
+distribution.
+Dr Hamza Altarturi
+
+
+--- PAGE 28 ---
+The Area Principle & Density Scale
+• The Area Principle: When representing magnitude in 2D, 
+the area of the figure should represent the magnitude
+• Density Scale: The vertical axis of a histogram must 
+represent density (crowdedness), not counts
+• Formula: Area of bar = Height × Width = Percent of entries 
+in bin
+• Height = Percent in bin / Width of bin
+• Python Requirement: Always use plt.hist(..., 
+density=True)
+Dr Hamza Altarturi
+
+
+--- PAGE 29 ---
+Continuous 
+Distributions 
+& Density 
+Curves
+• As sample size increases and bin 
+widths become extremely slim, the 
+histogram approaches a smooth 
+curve
+• Probability Density Function: A 
+smooth continuous curve where the 
+total area under the curve is exactly 1
+• Probabilities are calculated as the 
+area under the curve between two 
+points
+• Note: The probability of hitting one 
+exact continuous number (like exactly 
+180.0000 cm) is mathematically zero. 
+We measure intervals
+Dr Hamza Altarturi
+
+
+--- PAGE 30 ---
+Spotting Modality and Patterns
+• Histograms help us spot Modality (number of peaks).
+• Unimodal: One clear peak.
+• Bimodal: Two clear peaks.
+• Why it matters: Bimodality often indicates the presence of two 
+distinct sub-groups mixed together in your dataset.
+Dr Hamza Altarturi
+
+
+--- PAGE 31 ---
+Visualizing Spread: Box Plots
+• Box Plot (Box-and-Whisker): A visual 
+representation of the Five-Number 
+Summary
+• Minimum (non-outlier)
+• Q1 (25th percentile)
+• Median (50th percentile)
+• Q3 (75th percentile)
+• Maximum (non-outlier)
+• Python: plt.boxplot()
+Dr Hamza Altarturi
+
+
+--- PAGE 32 ---
+Identifying Outliers Visually (IQR Method)
+• Box plots automatically identify and flag outliers using the 1.5 × 
+IQR Rule
+• IQR = Q3−Q1.
+• Fences:
+• Upper Fence = Q3+1.5×IQR
+• Lower Fence = Q1−1.5×IQR
+• Any data point outside these fences is drawn as a distinct dot (an 
+outlier)
+Dr Hamza Altarturi
+
+
+--- PAGE 33 ---
+Handling 
+Outliers
+Once detected, what do we do with outliers?
+Investigate: Are they data entry errors? (e.g., a 
+pregnancy length of 50 weeks or a birth weight of 51 
+lbs)
+Clean: Errors should be filtered out or replaced with 
+NaN (np.nan)
+Retain: Some outliers are legitimate rare events. 
+Removing true data without justification introduces 
+bias.
+Adapt: Use robust statistics (Median, IQR) that are 
+not thrown off by legitimate outliers
+Dr Hamza Altarturi
+
+
+--- PAGE 34 ---
+Match the 
+variable type to 
+the right 
+summary and 
+chart
+Variable situation Good summary Good chart
+One categorical counts, 
+proportions bar chart
+One numerical mean/median, 
+std/IQR histogram, box plot
+Two numerical association, 
+direction scatter plot
+Two categorical contingency table grouped/stacked 
+bars
+Numerical by 
+categorical
+compare 
+centers/spread
+side-by-side box 
+plots
+Dr Hamza Altarturi
+
+
+--- PAGE 35 ---
+Discovering 
+Patterns in Data
+Discovering 
+Relationships & 
+Communicating 
+Findings
+Dr Hamza Altarturi
+
+
+--- PAGE 36 ---
+Discovering Relationships (Scatter Plots)
+• Scatter Plot: Visualizes the relationship between two numerical 
+variables
+• One point per row/case
+• Explanatory vs. Response:
+• x-axis: Explanatory (Predictor) variable.
+• y-axis: Response (Outcome) variable.
+• Python: plt.scatter(x_col, y_col)
+Dr Hamza Altarturi
+
+
+--- PAGE 37 ---
+Spotting Direction, Form, and Strength
+• When reading a scatter plot, evaluate:
+• Direction:
+• Positive: As X increases, Y increases
+• Negative: As X increases, Y decreases
+• Form: Linear (straight line trend) vs. Non-linear.
+• Strength: How tightly clustered the points are around the invisible trend 
+line.
+• Outliers: Points deviating far from the general pattern (e.g., High average 
+revenue but very low number of movies)
+Dr Hamza Altarturi
+
+
+--- PAGE 38 ---
+Cross-Classifying Categorical Variables
+• How do we find relationships between two categorical variables?
+• Contingency Tables / Pivot Tables: Group together rows that share 
+a combination of values and organize the counts into a grid
+• Python: pd.crosstab(df['col1'], df['col2']) or df.pivot()
+• Can be adapted to find the sum or mean of a third numerical 
+variable within that gri
+Dr Hamza Altarturi
+
+
+--- PAGE 39 ---
+Comparing Groups Visually
+• Overlaid Graphs: We can plot distributions for different groups on 
+the exact same axes to compare them directly.
+• Techniques:
+• Overlaid Histograms: Plotting two density histograms on top of each other 
+(using transparency/alpha) to see the shift in center and spread
+• Overlaid Scatter Plots: Using different colors to represent a third 
+categorical variable on a 2D scatter plot
+• Side-by-side Box Plots: Plotting a numerical variable grouped by a 
+categorical variable
+Dr Hamza Altarturi
+
+
+--- PAGE 40 ---
+Numerical by categorical
+One of the most common EDA comparisons
+• When comparing a numerical variable across groups:
+• compare center
+• compare spread
+• compare shape
+• compare outliers
+• Good visuals:
+• side-by-side box plots
+• overlaid density histograms
+• violin plots if later desired
+Dr Hamza Altarturi
+
+
+--- PAGE 41 ---
+Practical Significance and Context
+• Practical vs. Statistical Significance
+• A difference might exist mathematically, but is it big enough to matter in 
+the real world?
+• Context & Empathy
+• Data are not just numbers. Every row represents a human being, a 
+patient, or an event.
+• “Consider the people represented by the data, and afford them 
+respect and gratitude.”
+Dr Hamza Altarturi
+
+
+--- PAGE 42 ---
+Summary
+Rows are cases; columns are variables
+Identify variable type before choosing summaries or graphs
+Use counts/proportions for categorical variables
+Use center/spread for numerical variables
+Use median/IQR for skewed data or outliers
+Histograms, box plots, and scatter plots reveal different aspects of data
+EDA includes data quality checking, not just plotting
+Communicate findings in plain language and with context
+Dr Hamza Altarturi

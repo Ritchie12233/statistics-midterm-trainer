@@ -1,0 +1,427 @@
+
+
+--- PAGE 1 ---
+Data & Tools
+Sampling & Observational vs. Experimental 
+Thinking  using Jupyter Notebook & Python
+
+
+--- PAGE 2 ---
+Today’s 
+Agenda
+Part 1: Collecting Data: 
+Sampling & Observational 
+vs. Experimental Thinking
+Part 2: Course Tooling: 
+Python & Jupyter 
+Workflow
+
+
+--- PAGE 3 ---
+Collecting Data
+Sampling & 
+Observational vs. 
+Experimental 
+Thinking
+
+
+--- PAGE 4 ---
+Populations, Samples, and Inference
+The Dangers of Anecdotal Evidence
+Sampling Bias and Sampling Methods
+Observational Studies vs. Experiments
+Confounding Variables and Causation
+Principles of Experimental Design (Placebos & Blinding)
+
+
+--- PAGE 5 ---
+Populations 
+vs. Samples
+
+
+
+--- PAGE 6 ---
+Parameters, Statistics, and Inference
+• Parameter
+• A measure concerning a whole 
+population (e.g., the true average of the 
+population).
+• Statistic
+• A measure concerning a sample (e.g., the 
+sample average).
+• Inferential Statistics
+• Using data from an observed sample to 
+make a conclusion about a broader 
+population.
+
+
+
+--- PAGE 7 ---
+The Danger of Anecdotal 
+Evidence
+• Anecdotal Evidence: Data collected 
+informally or haphazardly, usually based on 
+personal, unpublished stories.
+• Why it fails:
+• Small sample size: Fails to capture 
+natural variation.
+• Selection & Confirmation Bias: People 
+share and remember stories that 
+confirm their existing beliefs.
+• Inaccuracy: Human memory is flawed.
+
+
+
+--- PAGE 8 ---
+Representative 
+Samples & 
+Sampling Bias
+
+
+
+--- PAGE 9 ---
+Other 
+Sources of 
+Bias
+• Non-Response Bias: Occurs when individuals who choose not 
+to participate differ significantly from those who do.
+• Response Bias: Occurs when participants do not respond 
+truthfully (often to appease the researcher or fit social norms).
+
+
+--- PAGE 10 ---
+Probability-
+Based Sampling
+Simple Random 
+Sample (SRS)
+SRS: Every member of the 
+population has an equal 
+chance of being selected
+This is the gold standard for 
+avoiding sampling bias
+Operates like drawing 
+names from a well-mixed 
+hat
+
+
+--- PAGE 11 ---
+Advanced 
+Sampling
+Stratified Sampling
+Stratified Sampling: A "divide-
+and-conquer" strategy.
+The population is divided into 
+similar groups (strata).
+A simple random sample is then 
+taken within each stratum.
+Goal: To ensure every sub-
+group is adequately 
+represented.
+
+
+--- PAGE 12 ---
+Advanced 
+Sampling 
+Cluster & Multistage
+Cluster Sampling: The population is 
+broken into many diverse groups 
+(clusters). A few clusters are 
+randomly selected, and all cases in 
+those clusters are sampled.
+Multistage Sampling: Similar to 
+cluster, but a random sample is taken 
+within the selected clusters instead 
+of measuring everyone.
+Goal: To save time and money when 
+populations are spread out.
+
+
+--- PAGE 13 ---
+Observational Studies vs. Experiments
+Which Method to Choose?
+
+
+
+--- PAGE 14 ---
+The 
+Confounding 
+Variable
+• Confounding Variable: A third, 
+unmeasured variable that is related 
+to both the explanatory and 
+response variables.
+• Also known as a "lurking variable. "
+• The Rule: Association does NOT 
+imply causation!
+
+
+--- PAGE 15 ---
+Establishing 
+Causation
+
+
+
+--- PAGE 16 ---
+Principles of Experimental Design
+Controlling: Standardizing 
+differences across groups 
+(e.g., all patients take the 
+pill with 12oz of water)
+Randomization: Randomly 
+assigning cases to 
+treatments
+Replication: Collecting a 
+sufficiently large sample to 
+accurately estimate the 
+effect
+Blocking: Grouping 
+individuals by a known 
+variable before 
+randomizing
+
+
+--- PAGE 17 ---
+Comparing Groups: Independent vs. Paired
+Choose the appropriate sampling method for group comparison
+
+
+
+--- PAGE 18 ---
+Placebos and Control Groups
+How to design a controlled experiment?
+
+
+
+--- PAGE 19 ---
+Blinding
+Single-Blind Study
+• The participants do not know which 
+treatment group they are in
+Double-Blind Study
+• Neither the participants nor the 
+researchers interacting with them know 
+who is in which group.
+Goal
+• To prevent researcher bias and participant 
+placebo effects.
+
+
+--- PAGE 20 ---
+Summary
+• Data Collection is Critical: A study is only as good as its sample.
+• Avoid Bias: Use probability-based sampling (Simple Random, 
+Stratified) over convenience sampling and anecdotes.
+• Observational Studies: Reveal associations; they are vulnerable 
+to confounding variables.
+• Randomized Experiments: Can establish causation by 
+controlling the environment and utilizing randomization, 
+placebos, and blinding.
+
+
+--- PAGE 21 ---
+Course Tooling Python & Jupyter 
+Workflow
+
+
+--- PAGE 22 ---
+Python & Jupyter 
+Workflow
+Why program in Data Science?
+Introduction to the Python Ecosystem (Jupyter & 
+Colab)
+Core Libraries: NumPy, Pandas, and Matplotlib
+Working with Tabular Data: DataFrames & Series
+Data Loading, Validation, and Cleaning
+Summary Statistics in Python
+
+
+--- PAGE 23 ---
+Why Program in Data Science?
+• The Problem: Computers cannot study the 
+world on their own.
+• The Solution: People must precisely describe 
+what steps the computer should take to 
+collect and analyze data. These steps are 
+expressed through programs.
+• Why Python?
+• Python 3 is a widely used language in 
+commercial applications, scientific 
+experiments, and open-source projects.
+• Allows us to handle diverse datasets (text, 
+images, video) beyond just numbers.
+
+
+--- PAGE 24 ---
+The Programming Environment
+Jupyter Notebooks: An interactive programming environment 
+that mixes code, text, and visual outputs in one document.
+Google Colab: A free, cloud-based platform that allows you to 
+run Jupyter notebooks directly in your web browser.
+Local Installation: The Anaconda distribution packages Python 
+3, Jupyter , and essential libraries together for local use.
+
+
+--- PAGE 25 ---
+Core Python 
+Libraries
+• Libraries: Toolkits created by the community 
+that add specific capabilities to Python.
+• Data scientists rely on three foundational 
+libraries:
+• numpy (imported as np): Used for fast 
+numerical computation.
+• pandas (imported as pd): Used for 
+managing and analyzing tabular data.
+• matplotlib.pyplot (imported as plt): Used 
+for data visualization.
+
+
+--- PAGE 26 ---
+The Pandas 
+DataFrame
+• DataFrame: The Pandas 
+data structure that 
+represents tabular data.
+• It organizes data into 
+• Rows (cases/observations) 
+• Columns (variables).
+• Index: The left-most 
+column that contains a 
+label for each row (usually 
+integers starting from 0).
+
+
+--- PAGE 27 ---
+Loading 
+Data into 
+Python
+• Before analysis, data must be loaded into the 
+Python environment.
+• Pandas provides methods to read various file 
+formats directly into a DataFrame.
+• pd.read_csv(): Reads standard comma-
+separated files.
+• pd.read_fwf(): Reads fixed-width formatted 
+data files.
+• We assign the loaded data to a variable name 
+(e.g., preg = read_stata(...)).
+
+
+--- PAGE 28 ---
+Inspecting 
+the 
+DataFrame
+Once loaded, always inspect your data to 
+ensure it was imported correctly!
+shape: An attribute that returns the number 
+of rows and columns.
+head(): A method that displays the first 5 
+rows of the DataFrame.
+columns: An attribute that returns an Index 
+object containing all variable names.
+
+
+--- PAGE 29 ---
+The Pandas Series
+• Series: A Pandas data structure representing a single column of 
+data (a sequence of values).
+• Extracted using brackets: pregordr = preg["pregordr"].
+• Series also have a dtype (data type):
+• int64: 64-bit integers (whole numbers).
+• float64: Floating-point values (decimals).
+
+
+--- PAGE 30 ---
+Data 
+Validation 
+with 
+Frequencies
+Data Validation: Comparing basic 
+statistics computed in Python against 
+published codebooks to spot errors.
+value_counts(): A method that 
+counts the number of times each 
+unique value appears in a Series.
+sort_index(): Sorts the output by the 
+category values rather than by 
+frequency.
+
+
+--- PAGE 31 ---
+Handling 
+Missing 
+Data
+Missing Data: Real-world data often has 
+inapplicable or refused answers.
+NaN (Not a Number): How Pandas 
+represents missing values.
+Use value_counts(dropna=False) to see 
+the count of NaN values.
+replace(): Method used to overwrite 
+error codes (e.g., 97, 98, 99) with np.nan.
+
+
+--- PAGE 32 ---
+Data Transformation
+Transformation: Converting data into different formats or 
+performing arithmetic calculations across columns.
+Recodes: New variables calculated based on the raw data.
+Examples of mathematical 
+operations in Pandas:
+Division: preg["agepreg"] /= 100.0
+Addition across columns: preg["totalwgt_lb"] = 
+preg["birthwgt_lb"] + preg["birthwgt_oz"] / 16.0
+
+
+--- PAGE 33 ---
+
+
+
+--- PAGE 34 ---
+Summary 
+Statistics in 
+Python
+• Pandas Series provide built-in 
+methods to compute basic 
+summary statistics:
+• count(): Returns the number of 
+non-NaN values.
+• sum(): Adds up all values.
+• mean(): Calculates the average.
+• var(): Computes the variance.
+• std(): Computes the standard 
+deviation.
+
+
+--- PAGE 35 ---
+Exploring 
+Subsets of 
+Data (query)
+• query(): A Pandas method used to 
+filter a DataFrame based on specific 
+conditions.
+• Takes a string containing column 
+names and comparison operators.
+• Example: subset = 
+preg.query("caseid == 10229")
+• Returns a smaller DataFrame 
+containing only the rows where the 
+condition is True.
+
+
+--- PAGE 36 ---
+Context & 
+Conclusion
+• Data science requires thinking on two levels: the 
+statistics and the context.
+• Rows of data represent real people and real 
+events.
+• Columns represent the characteristics of them
+Data with Empathy:
+• We defined Data Science and Statistics.
+• We learned how to design studies and gather
+samples.
+• We explored the Python and Jupyter tools 
+needed to clean, transform, and analyze this 
+data.
+Wrap-up of Week 1&2:

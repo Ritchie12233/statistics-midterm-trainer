@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Statistics Midterm Trainer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Statistics for Data Science · Week 1-5</p>
+      <h1>Midterm Trainer</h1>
+      <p class="subline">English-first practice with Chinese notes · 英文为主，中文辅助标注</p>
+    </div>
+    <div class="top-actions">
+      <button id="resetStatsBtn" class="ghost danger" type="button">Reset Data</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <nav class="tabs" aria-label="Main navigation">
+        <button class="tab active" data-view="statsView" type="button">Dashboard<span>总览</span></button>
+        <button class="tab" data-view="mapView" type="button">Map<span>脑图</span></button>
+        <button class="tab" data-view="reviewView" type="button">Notes<span>知识点</span></button>
+        <button class="tab" data-view="practiceView" type="button">Practice<span>刷题</span></button>
+        <button class="tab" data-view="wrongView" type="button">Mistakes<span>错题本</span></button>
+        <button class="tab" data-view="examView" type="button">Exam<span>模拟考</span></button>
+      </nav>
+
+      <section class="quick-stats" aria-label="Study statistics">
+        <div>
+          <span id="totalAnswered">0</span>
+          <small>Answered<br>已答题</small>
+        </div>
+        <div>
+          <span id="accuracy">0%</span>
+          <small>Accuracy<br>正确率</small>
+        </div>
+        <div>
+          <span id="wrongCount">0</span>
+          <small>Mistakes<br>错题</small>
+        </div>
+      </section>
+
+      <section class="selector">
+        <label for="weekSelect">Chapter · 章节</label>
+        <select id="weekSelect">
+          <option value="all">All mixed · 全部混合</option>
+        </select>
+      </section>
+
+      <section class="selector">
+        <label for="difficultySelect">Difficulty · 难度</label>
+        <select id="difficultySelect">
+          <option value="all">Level 1-10 · 全部</option>
+          <option value="1-3">Level 1-3 · 基础</option>
+          <option value="4-6">Level 4-6 · 应用</option>
+          <option value="7-8">Level 7-8 · 挑战</option>
+          <option value="9-10">Level 9-10 · 拓展</option>
+        </select>
+      </section>
+
+      <section class="selector">
+        <label for="typeSelect">Question Type · 题型</label>
+        <select id="typeSelect">
+          <option value="all">All types · 全部</option>
+        </select>
+      </section>
+
+      <section class="selector">
+        <label for="conceptSelect">Concept · 内容</label>
+        <select id="conceptSelect">
+          <option value="all">All concepts · 全部</option>
+        </select>
+      </section>
+    </aside>
+
+    <section class="content">
+      <section id="statsView" class="view active">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Dashboard</p>
+            <h2>Readiness Overview</h2>
+            <p class="subline">Track accuracy, weak concepts, and exam pacing · 追踪正确率、薄弱点和考试节奏</p>
+          </div>
+        </div>
+        <div id="statsPanel" class="stats-panel"></div>
+      </section>
+
+      <section id="mapView" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Knowledge Map</p>
+            <h2>Detailed Expandable Mind Map</h2>
+            <p class="subline">Open and close each branch to review the full structure · 可展开/收起的完整知识结构</p>
+          </div>
+          <div class="button-row">
+            <button id="expandMapBtn" class="ghost" type="button">Expand All</button>
+            <button id="collapseMapBtn" class="ghost" type="button">Collapse All</button>
+            <button id="startWeakBtn" type="button">Drill Weak Areas</button>
+          </div>
+        </div>
+        <div class="mindmap-wrap">
+          <div id="mindmap" role="img" aria-label="Statistics concept roadmap"></div>
+        </div>
+        <div id="mapDetails" class="details-panel"></div>
+      </section>
+
+      <section id="reviewView" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Review Notes</p>
+            <h2>Concept Notes</h2>
+            <p class="subline">English definitions with Chinese annotations · 英文定义 + 中文注释</p>
+          </div>
+          <input id="conceptSearch" type="search" placeholder="Search: CLT, IQR, confounding...">
+        </div>
+        <div id="conceptGrid" class="concept-grid"></div>
+      </section>
+
+      <section id="practiceView" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Practice</p>
+            <h2>Practice Mode</h2>
+            <p class="subline">Instant feedback is enabled here · 练习模式会立刻告诉你对错</p>
+          </div>
+          <div class="button-row">
+            <button id="newQuestionBtn" type="button">New Question</button>
+            <button id="prevPracticeBtn" class="ghost" type="button">Previous</button>
+            <button id="nextPracticeBtn" class="ghost" type="button">Next</button>
+            <button id="reviewConceptBtn" class="ghost" type="button">Review Concept</button>
+          </div>
+        </div>
+        <div id="practiceProgress" class="practice-progress">Question 1 / 1</div>
+        <div id="questionCard" class="question-card"></div>
+      </section>
+
+      <section id="wrongView" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Mistake Book</p>
+            <h2>Mistake Book</h2>
+            <p class="subline">Wrong answers are linked back to concepts · 错题可直接回到知识点</p>
+          </div>
+          <div class="button-row">
+            <button id="practiceWrongBtn" type="button">Drill Mistakes</button>
+            <button id="clearWrongBtn" class="ghost danger" type="button">Clear Mistakes</button>
+          </div>
+        </div>
+        <div id="wrongList" class="wrong-list"></div>
+      </section>
+
+      <section id="examView" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Mock Exam</p>
+            <h2>100 Questions / 60 Minutes</h2>
+            <p class="subline">No correctness feedback until submission · 考试模式不会即时判分</p>
+          </div>
+          <div id="timer" class="timer">60:00</div>
+        </div>
+        <div class="time-track" aria-label="Exam time milestones">
+          <span>Start</span>
+          <span>15 min</span>
+          <span>30 min</span>
+          <span>45 min</span>
+          <span>60 min</span>
+          <div id="timeNeedle"></div>
+        </div>
+        <div id="examStart" class="exam-start">
+          <p>This mode simulates the real exam: 100 multiple-choice questions, 60 minutes, no immediate feedback. Results, weak areas, and mistakes appear only after submission.</p>
+          <p class="zh-note">模拟真实考试：100 道选择题，60 分钟，答题时不显示对错，交卷后才看结果。</p>
+          <button id="startExamBtn" type="button">Start Mock Exam</button>
+        </div>
+        <div id="examPanel" class="exam-panel hidden">
+          <div class="exam-progress">
+            <span id="examProgressText">Question 1 / 100</span>
+            <span id="examAnsweredText">Answered 0 · Unanswered 100</span>
+            <progress id="examProgress" value="1" max="100"></progress>
+          </div>
+          <div id="examQuestion" class="question-card"></div>
+          <div class="button-row exam-nav">
+            <button id="prevExamBtn" class="ghost" type="button">Previous</button>
+            <button id="nextExamBtn" type="button">Next</button>
+            <button id="pauseExamBtn" class="ghost" type="button">Pause</button>
+            <button id="reviewExamBtn" class="ghost" type="button">Review Answers</button>
+            <button id="submitExamBtn" class="danger" type="button">Submit Exam</button>
+          </div>
+          <div id="examPaused" class="pause-layer hidden">
+            <h3>Exam Paused</h3>
+            <p>Timer is stopped. Resume when you are ready. · 计时已暂停。</p>
+            <button id="resumeExamBtn" type="button">Resume Exam</button>
+          </div>
+          <div id="examReview" class="exam-review hidden"></div>
+        </div>
+        <div id="examResult" class="exam-result hidden"></div>
+      </section>
+    </section>
+  </main>
+
+  <div id="confirmModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="modal-card">
+      <h3 id="confirmTitle">Submit exam?</h3>
+      <p id="confirmText">You still have unanswered questions. Once submitted, answers cannot be changed.</p>
+      <p class="zh-note">确认交卷后不能修改，未答题会按错误处理。</p>
+      <div class="button-row">
+        <button id="confirmSubmitBtn" class="danger" type="button">Yes, Submit</button>
+        <button id="cancelSubmitBtn" class="ghost" type="button">Keep Reviewing</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+
+
+--- PAGE 1 ---
+What is Statistics 
+for Data Science?
+The Role of Statistics in the Data Science Workflow
+
+
+--- PAGE 2 ---
+About You 
+
+
+
+--- PAGE 3 ---
+About Me 
+Hamza Altarturi
+PhD in Artificial Intelligence
+Currently working as a Data 
+Scientist at a Global 
+Organization
+
+
+--- PAGE 4 ---
+Today’s 
+Agenda
+Part 1: What is Data Science and where 
+does Statistics fit?
+Part 2: Data Basics: Cases, Variables, 
+and Structures 
+Part 3: Collecting Data: Sampling & 
+Observational vs. Experimental Thinking 
+Part 4: Course T ooling: Python & Jupyter 
+Workflow
+
+
+--- PAGE 5 ---
+What is Data 
+Science and 
+Where Does 
+Statistics Fit? 
+Foundations of the 
+Data Science 
+Workflow
+
+
+--- PAGE 6 ---
+
+
+
+--- PAGE 7 ---
+What Are Data?
+• Data: Descriptions of the world around us.
+• Collected through careful observation (e.g., field notes, surveys, and 
+experiments)
+• Stored on computers to allow us to infer properties about the world
+• Data form the backbone of any statistical investigation
+
+
+
+--- PAGE 8 ---
+Defining 
+Data 
+Science
+Data Science: The discipline of drawing 
+useful conclusions from large and 
+diverse data sets using computation
+It combines statistical ideas with 
+fundamental computer science 
+concepts
+Focuses on a minimal set of core 
+techniques applied to real-world 
+applications
+
+
+--- PAGE 9 ---
+The Three Core Pillars of Data Science
+
+
+
+--- PAGE 10 ---
+Pillar 1 — Exploration
+• Definition: Identifying patterns in information
+• Goal: To summarize data concisely, look for differences, and 
+check for inconsistencies
+• Primary Tools:
+• Visualizations (graphs, charts)
+• Descriptive statistics
+
+
+--- PAGE 11 ---
+
+
+
+--- PAGE 12 ---
+Pillar 2 — Prediction
+• Definition: Using information we know to make informed guesses 
+about values we wish we knew
+• Goal: To accurately forecast unknown or future outcomes based 
+on historical data
+• Primary Tools:
+• Machine learning
+• Optimization algorithms
+
+
+--- PAGE 13 ---
+
+
+
+--- PAGE 14 ---
+Pillar 3 — Inference
+• Definition: Quantifying our degree of certainty
+• Goal: To determine if patterns found in our sample data will also 
+appear in new observations
+• Primary Tools:
+• Statistical tests
+• Statistical models
+
+
+--- PAGE 15 ---
+
+
+
+--- PAGE 16 ---
+Why Do We Need Data Science?
+Decision Making under Uncertainty: Most important decisions are 
+made with only partial information
+Reducing Uncertainty: Access to large datasets and computational 
+tools sharply reduces the degree of uncertainty
+Universal Application: Data-driven decision-making has transformed 
+finance, medicine, advertising, manufacturing, and social sciences
+
+
+--- PAGE 17 ---
+
+
+
+--- PAGE 18 ---
+The 
+Importance 
+of Domain 
+Knowledge
+Data science is more than just 
+math and code.
+Context Matters: Understanding 
+a specific domain (e.g., 
+healthcare, economics) is 
+essential
+The Goal: To ask appropriate 
+questions about the data and 
+correctly interpret the answers 
+provided by computational tools
+
+
+--- PAGE 19 ---
+Where Does Statistics Fit In?
+• The Core Challenge: Drawing robust conclusions about the world 
+using incomplete information
+• The Solution: Statistics studies exactly how to do this
+• Statistics is a central, foundational component of the entire data 
+science workflow
+
+
+--- PAGE 20 ---
+Resampling & 
+Randomization over 
+Pure Math
+• The Problem with Traditional Math: 
+Real data rarely follow regular 
+patterns or perfectly match standard 
+equations
+• The Computational Solution:
+• Using randomness to imagine 
+many possible scenarios 
+consistent with the data
+• Resampling techniques require 
+fewer assumptions and conditions 
+than advanced traditional math
+
+
+
+--- PAGE 21 ---
+The Danger of Anecdotal Evidence
+• Anecdotal Evidence: Data collected in a haphazard 
+fashion, often based on unpublished, personal 
+stories
+• Example: "I met two students who took 7 years to 
+graduate, so it must take longer to graduate here 
+than at other colleges"
+• The Issue: May be true, but only represents 
+extraordinary or unusual cases
+
+
+
+--- PAGE 22 ---
+Why Anecdotal Evidence Fails
+• Anecdotal evidence usually fails standard statistical evaluations 
+because of:
+• Small Sample Size: Too few observations to see natural variation
+• Selection Bias: People interested in a topic are more likely to share 
+unusual data
+• Confirmation Bias: People cite examples that confirm their pre-existing 
+beliefs
+• Inaccuracy: Personal stories are easily misremembered or 
+misrepresented
+
+
+--- PAGE 23 ---
+
+
+
+--- PAGE 24 ---
+The Statistical Solution: Generalizing to a 
+Population
+• The Alternative to Anecdotes: Rigorous data collection and 
+inference
+• Population: The entire group or set of possible cases
+• Sample: A subset of the population from which data are collected
+• Inference: Using data from a randomly selected sample to 
+estimate characteristics of the general population
+
+
+--- PAGE 25 ---
+Data Basics: 
+Cases, Variables, 
+and Structures
+Understanding the 
+Building Blocks of 
+Data Science
+
+
+--- PAGE 26 ---
+Cases, Variables, and Constants
+Case (Observational Unit): The 
+individual unit from which data are 
+collected
+Examples: A person, an animal (subject), a 
+county, or a loan
+Variable: A characteristic of a case that is measured and can take on 
+different values (i.e., it varies)
+Constant: A characteristic that is the exact same for all cases in a 
+research study
+
+
+--- PAGE 27 ---
+Organizing Data — The Data Matrix
+• Data Matrix: A convenient and common way to organize tabular 
+data, especially in spreadsheets or programming
+• Rows = Cases: Each row corresponds to a single, unique case
+• Columns = Variables: Each column represents a specific 
+characteristic measured for those cases
+• In Python: This structure is called a DataFrame, provided by the 
+Pandas library
+
+
+--- PAGE 28 ---
+Broad Types of Variables
+• Variables must be classified into types to determine which 
+statistical tools and graphs are appropriate
+• The two main branches of variables are:
+• Categorical (Qualitative): Represent groupings, names, or labels
+• Quantitative (Numerical): Represent numerical values with meaningful 
+magnitudes
+
+
+--- PAGE 29 ---
+Categorical 
+Variables
+Categorical Variables: Provide groupings that 
+may have no logical order or a logical order with 
+inconsistent differences between groups
+Also known as qualitative variables
+Examples:
+• Continent of birth
+• Preferred ice cream flavor (chocolate, vanilla, strawberry)
+
+
+--- PAGE 30 ---
+Nominal vs. Ordinal Categorical Variables
+Nominal (Unordered): 
+Categories with no natural 
+or logical ordering
+Example: US State of 
+residence (AL, AK, 
+WY)
+Ordinal (Ordered): 
+Categories that have a 
+logical, natural ordering, 
+but the "distance" between 
+categories is inconsistent
+Example: Highest 
+level of education 
+(High school, 2-year 
+degree, 4-year 
+degree, PhD)
+
+
+--- PAGE 31 ---
+Quantitative 
+Variables
+Quantitative Variables: Numerical values 
+with meaningful magnitudes that can be 
+placed in order with consistent intervals
+Also known as numerical variables
+Math operations (adding, subtracting, 
+averaging) make logical sense
+Examples: Weight in kilograms, distance 
+run in miles, or highway mile markers
+
+
+--- PAGE 32 ---
+Continuous vs. Discrete Quantitative Variables
+Continuous: Can take on any wide 
+range of numerical values, 
+including infinite decimal places
+Example: A student's height or the 
+unemployment rate
+Discrete: Can only take numerical 
+values with jumps (usually non-
+negative whole numbers)
+Example: The number of siblings a student 
+has, or the population count of a county
+
+
+--- PAGE 33 ---
+Relationships: 
+Associated vs. 
+Independent
+• Associated (Dependent) Variables: Two 
+variables that show a discernible pattern or 
+connection with one another
+• Positive Association: As one goes up, the 
+other goes up (e.g., median household 
+income and population change)
+• Negative Association: As one goes up, the 
+other goes down (e.g., multi-unit structures 
+and homeownership rates)
+• Independent Variables: Two variables that show 
+absolutely no evident relationship
+
+
+--- PAGE 34 ---
+Real-World Data Structures & Missing Data
+• Raw Data: Data that has not been processed after collection
+• Data Validation: The process of computing basic statistics and 
+comparing them to known results to check for import errors
+• Handling Missing Data:
+• Real-world data contains unknown or inapplicable values
+• These often appear as NaN ("Not a Number") in Python
+• Data Cleaning: The process of identifying errors, replacing special 
+error codes (like 97, 98, 99) with NaN, and computing new 
+variables
