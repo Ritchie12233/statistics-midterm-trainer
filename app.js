@@ -624,6 +624,31 @@ function renderQuestion(q, mountId = "questionCard", mode = "practice") {
   }
   state.currentQuestion = q;
   const c = conceptById(q.conceptId);
+  const navHtml = mode === "practice" ? `
+    <div class="big-nav">
+      <button class="nav-btn prev-btn" type="button" onclick="goPractice(-1)" title="Previous question">
+        <span class="nav-arrow">&#8592;</span>
+        <span class="nav-label">上一题<br><small>Previous</small></span>
+      </button>
+      <span class="nav-info">${state.practiceSession.length ? `Question ${state.practiceIndex + 1} / ${state.practiceSession.length}` : ""}</span>
+      <button class="nav-btn next-btn" type="button" onclick="goPractice(1)" title="Next question">
+        <span class="nav-label">下一题<br><small>Next</small></span>
+        <span class="nav-arrow">&#8594;</span>
+      </button>
+    </div>
+  ` : mode === "exam" ? `
+    <div class="big-nav">
+      <button class="nav-btn prev-btn" type="button" onclick="goExam(-1)" title="Previous question">
+        <span class="nav-arrow">&#8592;</span>
+        <span class="nav-label">上一题<br><small>Previous</small></span>
+      </button>
+      <span class="nav-info">${state.exam ? `Question ${state.exam.index + 1} / ${state.exam.pool.length}` : ""}</span>
+      <button class="nav-btn next-btn" type="button" onclick="goExam(1)" title="Next question">
+        <span class="nav-label">下一题<br><small>Next</small></span>
+        <span class="nav-arrow">&#8594;</span>
+      </button>
+    </div>
+  ` : "";
   document.querySelector(`#${mountId}`).innerHTML = `
     <div class="question-meta">
       <span class="tag">${c.week}</span>
@@ -637,6 +662,7 @@ function renderQuestion(q, mountId = "questionCard", mode = "practice") {
       ${q.options.map((opt, i) => `<button class="option" type="button" data-index="${i}">${String.fromCharCode(65 + i)}. ${opt}</button>`).join("")}
     </div>
     <div class="feedback hidden"></div>
+    ${navHtml}
   `;
   document.querySelectorAll(`#${mountId} .option`).forEach(btn => {
     btn.addEventListener("click", () => {
@@ -705,23 +731,170 @@ function openConcept(conceptId) {
 }
 
 function renderWrongList() {
-  const wrong = Object.values(state.stats.wrong || {}).map(w => questions.find(q => q.id === w.questionId)).filter(Boolean);
-  document.querySelector("#wrongList").innerHTML = wrong.length ? wrong.map(q => {
+  const wrongEntries = Object.values(state.stats.wrong || {});
+  const wrong = wrongEntries.map(w => {
+    const q = questions.find(q => q.id === w.questionId);
+    return q ? { question: q, record: w } : null;
+  }).filter(Boolean);
+  document.querySelector("#wrongList").innerHTML = wrong.length ? wrong.map(({ question: q, record }) => {
     const c = conceptById(q.conceptId);
+    const userChoice = record.choice;
+    const correctAnswer = q.answer;
+    const choiceLabels = ["A", "B", "C", "D"];
+    const optionsHtml = q.options.map((opt, i) => {
+      let cls = "wrong-option";
+      let badge = "";
+      if (i === correctAnswer && i === userChoice) {
+        cls = "wrong-option correct-choice";
+        badge = `<span class="choice-badge correct-badge">Correct &#10003;</span>`;
+      } else if (i === correctAnswer) {
+        cls = "wrong-option correct-choice";
+        badge = `<span class="choice-badge correct-badge">Correct Answer &#10003;</span>`;
+      } else if (i === userChoice) {
+        cls = "wrong-option user-wrong-choice";
+        badge = `<span class="choice-badge wrong-badge">Your Answer &#10007;</span>`;
+      }
+      return `<div class="${cls}"><span class="choice-letter">${choiceLabels[i]}.</span> ${opt} ${badge}</div>`;
+    }).join("");
+
+    const detailHtml = buildDetailedExplanation(q, c, userChoice, correctAnswer);
+
     return `
       <article class="wrong-item">
-        <span class="tag">${c.week}</span>
-        <span class="tag">${c.title}</span>
-        <span class="tag level">Level ${q.difficulty}/10</span>
-        <p>${q.prompt}</p>
+        <div class="wrong-item-header">
+          <span class="tag">${c.week}</span>
+          <span class="tag">${c.title}</span>
+          <span class="tag level">Level ${q.difficulty}/10</span>
+          <span class="tag type-tag">${q.type}</span>
+        </div>
+        <h3 class="wrong-question-prompt">${q.prompt}</h3>
         <p class="zh-note">${q.zh || ""}</p>
-        <div class="button-row">
-          <button type="button" onclick="practiceSpecific('${q.id}')">Redo Question</button>
+        <div class="wrong-options-list">
+          ${optionsHtml}
+        </div>
+        <div class="wrong-detail">
+          ${detailHtml}
+        </div>
+        <div class="button-row wrong-actions">
+          <button type="button" onclick="practiceSpecific('${q.id}')">Redo This Question</button>
           <button class="ghost" type="button" onclick="openConcept('${q.conceptId}')">Review Concept</button>
         </div>
       </article>
     `;
   }).join("") : `<div class="exam-start"><p>Your mistake book is empty. Wrong answers will appear here and disappear after you answer them correctly twice.</p><p class="zh-note">错题本现在是空的。做错会自动加入，连续做对两次会自动移出。</p></div>`;
+}
+
+function buildDetailedExplanation(q, c, userChoice, correctAnswer) {
+  const choiceLabels = ["A", "B", "C", "D"];
+  const userLabel = choiceLabels[userChoice];
+  const correctLabel = choiceLabels[correctAnswer];
+  const userOptText = q.options[userChoice];
+  const correctOptText = q.options[correctAnswer];
+
+  let html = "";
+
+  // Section 1: What the correct answer is and why
+  html += `<div class="detail-section">`;
+  html += `<h4>Why <span class="correct-inline">${correctLabel}. ${correctOptText}</span> is the correct answer</h4>`;
+  html += `<p>${q.explanation}</p>`;
+  html += `</div>`;
+
+  // Section 2: Why the user's choice was wrong
+  if (userChoice !== correctAnswer) {
+    html += `<div class="detail-section">`;
+    html += `<h4>Why your choice <span class="wrong-inline">${userLabel}. ${userOptText}</span> is incorrect</h4>`;
+    html += `<p>${explainWhyWrong(q, userChoice)}</p>`;
+    html += `</div>`;
+  }
+
+  // Section 3: Concept review
+  html += `<div class="detail-section">`;
+  html += `<h4>Key Concept: ${c.title}</h4>`;
+  html += `<p class="concept-summary">${c.summary}</p>`;
+  if (c.bullets && c.bullets.length) {
+    html += `<ul>${c.bullets.map(b => `<li>${b}</li>`).join("")}</ul>`;
+  }
+  html += `</div>`;
+
+  // Section 4: Worked example for calculation/scenario types
+  if (q.type === "Calculation" || q.type === "Scenario" || q.type === "Application") {
+    html += `<div class="detail-section example-box">`;
+    html += `<h4>Related Example</h4>`;
+    html += `<p>${generateExample(q, c)}</p>`;
+    html += `</div>`;
+  }
+
+  // Section 5: Study tip
+  html += `<div class="detail-section tip-box">`;
+  html += `<h4>Study Tip</h4>`;
+  html += `<p>${getStudyTip(q, c)}</p>`;
+  html += `</div>`;
+
+  return html;
+}
+
+function explainWhyWrong(q, userChoice) {
+  const correctAnswer = q.answer;
+  const userOpt = q.options[userChoice];
+  const correctOpt = q.options[correctAnswer];
+
+  const templates = {
+    reversal: `This option reverses the relationship. In statistics, direction matters: ${userOpt} states the opposite of what is true. The correct answer (${correctOpt}) correctly identifies the relationship.`,
+    partial: `This option captures only part of the truth. While there may be a kernel of relevance, ${userOpt} misses critical nuance. A more complete understanding is: ${correctOpt}.`,
+    confusion: `This is a common point of confusion. "${userOpt}" conflates two distinct statistical concepts. In this context, what we actually need is: ${correctOpt}.`,
+    irrelevant: `This option is not relevant to the question. "${userOpt}" may sound plausible but doesn't address what is actually being asked. The correct approach is: ${correctOpt}.`,
+    opposite: `This option states the exact opposite of the correct statistical principle. The truth is: ${correctOpt}. Remember to check the direction of the relationship.`,
+  };
+
+  if (userOpt.includes("not") || userOpt.includes("never") || userOpt.includes("no ")) {
+    return templates.opposite + " Double-check negatives in statistics questions.";
+  }
+  if (userOpt.length < 20) {
+    return templates.partial + " Short answers in multiple-choice questions are rarely complete answers.";
+  }
+  if (userOpt.includes("always") || userOpt.includes("every") || userOpt.includes("all ")) {
+    return templates.opposite + " Be skeptical of absolute words like 'always' or 'every' in statistics.";
+  }
+  return templates.confusion + " Review the concept summary below to clarify this distinction.";
+}
+
+function generateExample(q, c) {
+  const conceptId = q.conceptId;
+  const examples = {
+    "w3-center-spread": `Consider test scores: {65, 72, 78, 82, 85, 88, 92, 95, 98, 200}. The mean is 95.5 but the median is 86.5. The outlier (200) pulls the mean up by 9 points! This shows why the median is more "resistant" to outliers. In practice, always check both — large gaps between mean and median are a red flag for skewness.`,
+    "w5-normal": `Suppose exam scores follow N(70, 10²). A student scoring 85 has z = (85-70)/10 = 1.5, meaning they are 1.5 standard deviations above average. Using the empirical rule: 68% score between 60-80, 95% between 50-90, and 99.7% between 40-100. The student is roughly at the 93rd percentile.`,
+    "w4-probability": `Imagine rolling two fair dice. There are 6×6 = 36 equally likely outcomes. P(sum = 7) = 6/36 = 1/6 (six ways: {1,6}, {2,5}, {3,4}, {4,3}, {5,2}, {6,1}). P(sum = 2) = 1/36 (only {1,1}). This illustrates counting favorable outcomes divided by total outcomes.`,
+    "w4-rules": `A jar has 5 red and 3 blue marbles. P(red) = 5/8 = 0.625. If you draw, replace, and draw again, the probability of two reds = 0.625 × 0.625 = 0.3906 (independent events multiply). If instead you draw two without replacement, P(both blue) = (3/8) × (2/7) = 6/56 ≈ 0.107 (adjust for removal).`,
+    "w4-rv": `A game: pay $10 to play. Win $50 with probability 0.2, win $0 with probability 0.8. E(X) = 50(0.2) + 0(0.8) = $10. Since the expected payout equals the cost, it's a "fair game." If the cost were $12, the expected net loss would be $2 per play — don't play!`,
+    "w5-clt": `Bus wait times are uniformly distributed between 0-20 minutes (mean=10, heavily non-normal). Take 100 sample means, each from n=50 waits. The histogram of those 100 means will be approximately normal, centered near 10, with standard error ≈ original_SD/√50. This is the CLT in action — the original shape doesn't matter for large n.`,
+    "w2-sampling": `Suppose 60% of voters support policy A. A simple random sample of n=500 gives: margin of error ≈ 1/√500 ≈ 4.5%. So the sample proportion should be within ~4.5% of 60% about 95% of the time. A convenience sample of Twitter users would be far less reliable, regardless of sample size.`,
+    "w3-visual": `Dataset: household incomes in a city. A histogram with equal $10K bins shows most data below $100K but a long tail to $500K+. Using density: the $450-500K bin might have 0.5% of data, so its height = 0.005/10 = 0.0005 — barely visible. Without density, unequal bins would distort the visual.`,
+    "w2-experiments": `Testing a new teaching method: 200 students randomly assigned — 100 use new method (treatment), 100 use standard (control). Both groups take the same final exam. If treatment average = 78 and control = 72, with p < 0.05, we have evidence the method caused improvement. Randomization balances confounders like prior ability.`,
+  };
+  if (examples[conceptId]) return examples[conceptId];
+  return `Consider this in context: ${c.summary} For example, when working with real data in Python, you would apply this concept using Pandas or NumPy to verify and validate your findings.`;
+}
+
+function getStudyTip(q, c) {
+  const tips = {
+    "w1-foundations": "Build a mental map: Exploration → Prediction → Inference. Every statistical task falls into one (or more) of these three pillars.",
+    "w1-data-basics": "When you see a dataset, first ask: what is each row? What is each column? Classify every variable before doing anything else.",
+    "w2-sampling": "Always check HOW the data was collected before trusting ANY conclusion. A huge biased sample is worse than a small random one.",
+    "w2-bias": "For every study you read, ask: who is NOT in this sample? Who might have been left out, and how would that affect the results?",
+    "w2-experiments": "Random assignment ≠ random sampling. Random assignment helps establish causation; random sampling helps generalization. They solve different problems.",
+    "w3-center-spread": "Always report BOTH mean and median. If they differ significantly, your data is skewed and you need to explain why.",
+    "w3-visual": "For histograms: if bins have unequal widths, you MUST use density on the y-axis. This is one of the most common mistakes in data visualization.",
+    "w4-probability": "Probability = (favorable outcomes) / (total outcomes), but only when outcomes are equally likely. Always check this assumption first.",
+    "w4-rules": "Disjoint → ADD. Independent → MULTIPLY. These two rules cover 90% of probability problems. Know when each applies.",
+    "w4-bayes": "Base rate matters! A rare disease + good test ≠ you probably have it. Always ask: what was the probability BEFORE the test?",
+    "w4-rv": "Expected value is a long-run average, not what happens in any single trial. A positive E(X) doesn't mean you can't lose money.",
+    "w5-normal": "Z-score measures distance from the mean in standard deviation units. Z > 2 or Z < -2 is unusual (about 5% chance). Z > 3 is very rare (<0.3%).",
+    "w5-qq": "Q-Q plot is your best friend for checking normality. Straight line = normal-ish. Curved = not normal. Don't rely on histograms alone.",
+    "w5-discrete": "Binomial = fixed n, constant p, independent trials (like coin flips). Poisson = counting events over time/space with a stable rate (like calls per hour).",
+    "w5-clt": "CLT: sample means are approximately normal for large n, regardless of the original distribution. But it requires independence and finite variance!",
+  };
+  if (tips[conceptId]) return tips[conceptId];
+  return `Master the vocabulary and the logic flow of ${c.title}. When you encounter similar questions, trace back to the fundamental principle in ${c.week}.`;
 }
 
 function practiceSpecific(questionId) {
@@ -852,6 +1025,14 @@ function renderExamQuestion() {
       if (i === saved) btn.classList.add("selected");
     });
   }
+}
+
+function goExam(delta) {
+  if (!state.exam || state.exam.paused) return;
+  const newIndex = state.exam.index + delta;
+  if (newIndex < 0 || newIndex >= state.exam.pool.length) return;
+  state.exam.index = newIndex;
+  renderExamQuestion();
 }
 
 function selectExamAnswer(choice) {
